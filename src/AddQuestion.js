@@ -4,21 +4,24 @@ import Context from './Context';
 
 function AddQuestion() {
   const history = useHistory();
-  const { addQuestion, addChoice, setQuestionIndex, state } = useContext(
-    Context
-  );
-  const questionsCount = state.questions.length;
+  const { getCurrentQuestion, updateQuestion, addChoice } = useContext(Context);
+
+  const currentQuestion = getCurrentQuestion() || {};
 
   return (
     <div>
-      <p>{JSON.stringify(state)}</p>
       <h1>Add question</h1>
 
       <div>
         <label>Question</label>
-        <input type="text" name="question" />
+        <input
+          type="text"
+          name="question"
+          value={currentQuestion.text}
+          onChange={e => updateQuestion(e.target.value)}
+        />
       </div>
-      <div class="listPanel">
+      <div class="emptyPanel">
         <span>No choices added</span>
         <button
           class="addButton"
@@ -33,9 +36,8 @@ function AddQuestion() {
       <div
         style={{ marginTop: 5, display: 'flex', flexDirection: 'row-reverse' }}
       >
-        <button class="addButton">Save</button>
         <button class="cancelButton" onClick={() => history.push('/')}>
-          Cancel
+          &lt; Go Back
         </button>
       </div>
     </div>

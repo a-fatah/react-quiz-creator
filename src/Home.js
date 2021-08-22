@@ -4,16 +4,22 @@ import Context from './Context';
 
 function Home() {
   const history = useHistory();
-  const { addQuestion } = useContext(Context);
+  const { state, getQuizName, setQuizName, addQuestion } = useContext(Context);
+
   return (
     <div>
       <h1>Quiz Creator</h1>
       <p>Start by adding some questions</p>
       <div>
         <label>Quiz Name</label>
-        <input type="text" name="quizName" />
+        <input
+          type="text"
+          name="quizName"
+          value={getQuizName()}
+          onChange={e => setQuizName(e.target.value)}
+        />
       </div>
-      <div class="listPanel">
+      <div class="emptyPanel">
         <span>No questions added</span>
         <button
           class="addButton"
@@ -30,6 +36,9 @@ function Home() {
       >
         <button class="addButton">Create Quiz</button>
         <button class="cancelButton">Reset</button>
+      </div>
+      <div>
+        <pre>{JSON.stringify(state, null, 2)}</pre>
       </div>
     </div>
   );
